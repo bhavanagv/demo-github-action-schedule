@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '29-59 7 * * *'  # Runs every minute from 07:00 to 07:59 UTC
+    - cron: '29-59/1 7 * * *'  # Runs every minute from 07:29 to 07:59 UTC
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
@@ -13,6 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Setting Git User Info
+      run: |
+        git config --global user.name "Your Name"
+        git config --global user.email "23f3004066@ds.study.iitm.ac.in"
     - name: Running
       run: |
         echo "Hello - $(date -u)"
+        git add .
+        git commit -m "Automated commit at $(date -u)"
+        git push
